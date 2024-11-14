@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>OOPS</h1>
+    <form id="form" onsubmit="run(event)">
+       <input type="text" id="name" placeholder="Enter name">
+       <input type="text" id="id" placeholder="Enter id"> 
+       <input type="text" id = "username" placeholder="Enter username">
+       <input type="text" id="password" placeholder="Enter password">
+       <input type="submit">
+    </form>
+
+</body>
+</html>
+<script>
+    //Array of object
+    //let obj = {}- object literal
+    //constructor Function
+    //Object.create();
+    //Es6 classes
+    
+    //Object oriented programming - oops
+    //Inheritence
+    //Encapsulation
+    //Abstraction
+    //Polymorphism
+
+    //creating Student Management System.
+    //0. CLASS Student
+    //FE - View lectures,view assignments
+    //Admin - Suspend LMS, add student,remove student
+    //Signup and Login system
+    let students = JSON.parse(localStorage.getItem("student"))||[];
+    class User{
+       
+        constructor(name,id){
+            this.name = name;
+            this.id = id;
+        }
+        signup(username,password){
+            //Validation of username and password as per rules.
+       
+            let isValidated= false;
+            //validating Username & validating password method
+
+            isValidated = this.#validateUsername(username) && this.#validatePassword(password);
+            if(isValidated){
+                this.username = username;
+                this.password = password;
+              
+                students.push(this);
+                console.log('User registered successfully!!')
+            }
+            else{
+                console.log('Please follow username or password rules')
+            }
+            window.location.href="login.html";
+        }
+        #validateUsername(){
+          //Checking for rules
+          return true;
+        }
+        #validatePassword(){
+          return true;
+        }
+        login(username,password){
+           if(username === this.username && password === this.password){
+             console.log('Logged in Successfully !!');
+           }
+           else{
+             console.log("Authentication failed");
+           }
+        }
+
+    }
+    // let s1 = new User('pablo',1);
+    // s1.signup('pablo123','password00');
+    // s1.login('pablo123','password00');
+
+    // console.log('s1',s1);
+
+    //Create Student class from user
+    class Student extends User{
+        constructor(name,id){
+            //borrow properties from user.
+            super(name,id)
+            this.numOfAssignment = 0;
+        }
+       submitAssignment(){
+         this.numOfAssignment++
+       } 
+    }
+    class Admin extends User{
+        constructor(name,id){
+            super(name,id);
+        }
+        removeStudent(id){
+           //Remove object from array.
+           students = students.filter((el)=>{
+                return el.id !== id;
+            })
+        }
+    }
+    //input = inp.value - pas it as assignment
+    // let s1 = new Student('pablo',5);
+    // let s2 = new Student('pabloneruda',4);
+    // s2.signup('pabloner567','passneruda');
+    // s1.signup('pablo234','password');
+    // s1.login('pablo234','password');
+    // s2.submitAssignment();
+
+    //console.log('s1',s1)
+     //Encapsulation;- used for internal purposes and dont want anyone to access it..
+
+    // let n = new Admin('nrupul',3);
+    // n.removeStudent(4);
+    // console.log(students);
+    
+
+    let form = document.getElementById("form")
+    function run(){
+        event.preventDefault();
+
+       let name = form.name.value;
+       let id = form.id.value;
+       let username = form.username.value;
+       let password = form.password.value;
+       let s1 = new User(name,id);
+       s1.signup(username,password);
+       localStorage.setItem("student",JSON.stringify(students))
+     
+    }
+</script>

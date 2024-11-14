@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="form" onsubmit="run(event)">
+        <input type="text" id = "username" placeholder="Enter username">
+        <input type="text" id="password" placeholder="Enter password">
+        <input type="submit">
+        
+     </form>
+</body>
+</html>
+<script>
+     class User{
+        
+        constructor(username,password){
+            this.username = username;
+            this.password = password;
+        }
+        
+        #validateUsername(){
+          //Checking for rules
+          return true;
+        }
+        #validatePassword(){
+          return true;
+        }
+        login(usernam,passwor){
+            let data = JSON.parse(localStorage.getItem("student"));
+            let username= data.username;
+            let password = data.password;
+           if(usernam === this.username && passwor === this.password){
+             console.log('Logged in Successfully !!');
+           }
+           else{
+             console.log("Authentication failed");
+           }
+        }
+    }
+       let form = document.getElementById("form")
+    function run(event){
+        event.preventDefault();
+      
+       let usernam = form.username.value;
+       let passwor = form.password.value;
+       
+       let s1 = new User(usernam,passwor)
+       s1.login(usernam,passwor);
+    }
+    
+</script>
